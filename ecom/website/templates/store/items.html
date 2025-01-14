@@ -14,8 +14,14 @@
             <a class="nav-link active" aria-current="page" href="#">GPU
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">PROCESSOR</a>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              PRICE
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <a class="dropdown-item" href="?query={{ query }}&price_order=low_to_high">LOW TO HIGH</a>
+              <a class="dropdown-item" href="?query={{ query }}&price_order=high_to_low">Price: High to Low</a>
+          </div>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -42,6 +48,7 @@
           <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="query" type="text" value="{{ query }}">
           <button class="btn btn-outline-success" type="submit" >Search</button>
         </form>
+        
       </div>
     </div>
   </nav>

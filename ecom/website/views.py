@@ -172,10 +172,15 @@ def items(request):
 	query = request.GET.get('query','')
 	category_id = request.GET.get('category',0)
 	brand_id = request.GET.get('brand', 0)
+	price_order = request.GET.get('price_order', "") 
 	categories = Category.objects.all() 
 	items = Laptop.objects.all()
 	brands = Brand.objects.all()
-
+	if price_order == 'low_to_high': 
+		items = items.order_by('price')
+	elif price_order == 'high_to_low':
+		items = items.order_by('-price')
+	
 	if category_id: 
 		items = items.filter(category_id=category_id) 
 	if brand_id: 
@@ -184,7 +189,7 @@ def items(request):
 		items = items.filter(Q(name__icontains=query)|Q(description__icontains = query))
 		brands = brands.filter(Q(name__icontains = query)|Q(description__icontains = query))
 
-	return render(request, 'store/items.html', {'items': items, 'query': query, 'categories': categories,'category_id':int(category_id),'brands': brands,})
+	return render(request, 'store/items.html', {'items': items, 'query': query, 'categories': categories,'category_id':int(category_id),'brands': brands,'price_order':price_order,})
 
 def detail(request,pk): 
 	detail = Laptop.objects.get(pk=pk)
