@@ -1,0 +1,42 @@
+{% extends 'store/main.html' %} 
+
+{% block content %} 
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8">
+            <img src="{{ detail.image.url }}" class="img-fluid rounded-xl" alt="{{ detail.name }}">
+        </div>
+        
+        <div class="col-md-4 bg-light p-4 rounded-xl">
+            <h1 class="mb-4">{{ detail.name }}</h1>
+            <p><strong>Price: </strong>${{ detail.price }}</p>
+            <p><strong>Description: </strong><br>{{ detail.description }}</p>
+            <div class="box-element product">  
+                <button data-product="{{detail.id}}" data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add to Cart</button>
+                <h4 style="display: inline-block"><strong>Rs.{{ detail.price | floatformat:2 }}
+                </strong></h4>
+            </div>
+        </div>
+</div>
+
+<br><br> 
+<div class="text-center">
+    <h1>Related Items</h1>
+</div>
+<br><br>
+<div class="row">
+    {% for related_item in related_items %}
+    <div class="col-lg-4">
+        <img class="thumbnail" src="{{ related_item.image.url }}">
+        <div class="box-element product">
+            <h6><strong>{{ related_item.name }} </strong></h6>
+            <hr>    
+            <button data-product="{{related_item.id}}" data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add to Cart</button>
+            <a class="btn btn-outline-success" href="{% url 'detail' related_item.id %}">View</a>
+            <h4 style="display: inline-block"><strong>Rs.{{ related_item.price | floatformat:2 }}
+            </strong></h4>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock content %}  

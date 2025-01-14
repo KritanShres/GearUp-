@@ -1,0 +1,65 @@
+{% extends 'store/main.html' %} 
+{% load static %} 
+
+{% block content %} 
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Filter</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarScroll">
+        <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">GPU
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">PROCESSOR</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              TYPE
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              {% for category in categories %} 
+              <a class="dropdown-item" href="{% url 'items' %}?query={{ query }}&category={{ category.id }}">{{ category.name }}</a>
+              {% endfor %}
+          </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              BRAND
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              {% for brand in brands %} 
+              <a class="dropdown-item" href="{% url 'items' %}?query={{ query }}&brand={{ brand.id }}">{{ brand.name }}</a>
+              {% endfor %}
+          </div>
+          </li>
+        </ul>
+        <form class="d-flex" role="search" method = "get" action = "{% url 'items' %}">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="query" type="text" value="{{ query }}">
+          <button class="btn btn-outline-success" type="submit" >Search</button>
+        </form>
+      </div>
+    </div>
+  </nav>
+<br/>
+<div class="row">
+    {% for item in items %}
+	<div class="col-lg-4">
+        <img class="thumbnail" src="{{ item.image.url }}">
+        <div class="box-element product">
+            <h6><strong>{{ item.name }}</strong></h6>
+            <hr>
+    
+            <button data-product="{{item.id}}" data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add to Cart</button>
+            <a class="btn btn-outline-success" href="#">View</a>
+            <h4 style="display: inline-block; "><strong>Rs.{{ item.price | floatformat:2 }}
+            </strong></h4>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock content %}
